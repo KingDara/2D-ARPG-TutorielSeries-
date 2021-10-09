@@ -146,7 +146,7 @@ public class PlayerController : MonoBehaviour
 
         foreach (var enemy_ in enemy)
         {
-            enemy_.GetComponent<Enemy>().TakeDamage(damage);
+            enemy_.GetComponent<EnemyFly>().TakeDamage(damage);
         }
     }
 
