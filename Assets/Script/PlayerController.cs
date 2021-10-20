@@ -17,7 +17,7 @@ public class PlayerController : MonoBehaviour
     [Header("Attack")]
     private float attackTime;
     [SerializeField] float timeBetweenAttack;
-    private bool canMove;
+    public bool canMove = true, canAttack =true;
     [SerializeField] Transform checkEnemy;
     public LayerMask whatIsEnemy;
     public float range;
@@ -44,7 +44,11 @@ public class PlayerController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        if(canAttack)
         Attack();
+
+        
+
     }
 
     private void Attack()
