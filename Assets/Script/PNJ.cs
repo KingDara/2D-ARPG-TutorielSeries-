@@ -14,23 +14,50 @@ public class PNJ : MonoBehaviour
 
     HUDManager manager => HUDManager.instance;
 
+    public QuestSO quest;
+
+
+
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.E) && canDial)
         {
-            StartDialogue();
-            manager.continueButton.GetComponent<Button>().onClick.RemoveAllListeners();
-            manager.continueButton.GetComponent<Button>().onClick.AddListener(delegate { NextLine(); });
+            if(quest != null && quest.statut == QuestSO.Statut.none)
+            {
+                StartDialogue(quest.sentences);
+            }
+            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind)
+            {
+                StartDialogue(quest.InProgressSentence);
+            }
+            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount == quest.amounToFind)
+            {
+                StartDialogue(quest.completeSentence);
+                quest.statut = QuestSO.Statut.complete;
+
+            }
+            else if(quest != null && quest.statut == QuestSO.Statut.complete)
+            {
+                StartDialogue(quest.afterQuestSentence);
+            }
+            else if(quest == null)
+            {
+                StartDialogue(sentences);
+            }
+            
+            
         }
     }
 
-    public void StartDialogue()
+    public void StartDialogue(string[] sentence)
     {
         manager.dialogueHolder.SetActive(true);
         PlayerController.instance.canMove = false;
         PlayerController.instance.canAttack = false;
         isOndial = true;
-        TypingText(sentences);
+        TypingText(sentence);
+        manager.continueButton.GetComponent<Button>().onClick.RemoveAllListeners();
+        manager.continueButton.GetComponent<Button>().onClick.AddListener(delegate { NextLine(sentence); });
     }
 
 
@@ -48,17 +75,17 @@ public class PNJ : MonoBehaviour
         }
     }
 
-    public void NextLine()
+    public void NextLine(string[] sentence)
     {
         manager.continueButton.SetActive(false);
 
-        if(isOndial && index < sentences.Length - 1)
+        if(isOndial && index < sentence.Length - 1)
         {
             index++;
             manager.textDisplay.text = "";
-            TypingText(sentences);
+            TypingText(sentence);
         }
-        else if(isOndial && index == sentences.Length - 1)
+        else if(isOndial && index == sentence.Length - 1)
         {
             isOndial = false;
             index = 0;
