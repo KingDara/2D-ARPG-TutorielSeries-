@@ -24,5 +24,5 @@ public class QuestSO : ScriptableObject
     public Statut statut;
 
 
-
+    
 }

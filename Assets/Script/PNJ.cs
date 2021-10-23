@@ -12,23 +12,36 @@ public class PNJ : MonoBehaviour
     int index;
     bool isOndial, canDial;
 
+    public Sprite exclamation, interogation;
+
     HUDManager manager => HUDManager.instance;
 
     public QuestSO quest;
 
-
+    private void Start()
+    {
+       
+    }
 
     private void Update()
     {
+
+       
+
+
+
         if (Input.GetKeyDown(KeyCode.E) && canDial)
         {
             if(quest != null && quest.statut == QuestSO.Statut.none)
             {
                 StartDialogue(quest.sentences);
+                
             }
             else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind)
             {
                 StartDialogue(quest.InProgressSentence);
+                
+                
             }
             else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount == quest.amounToFind)
             {
