@@ -24,7 +24,7 @@ MonoBehaviour:
   afterQuestSentence:
   - 4
   objectTofind: 
-  actualAmount: 0
+  actualAmount: 1
   amounToFind: 1
   goldToGive: 50
-  statut: 1
+  statut: 2

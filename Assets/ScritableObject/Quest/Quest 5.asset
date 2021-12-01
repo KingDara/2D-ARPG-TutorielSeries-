@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c442ea0b466139b448cddc8358cc447a, type: 3}
   m_Name: Quest 5
   m_EditorClassIdentifier: 
-  id: 5
+  id: 4
   title: Retrouve mon chat 5
   description: J'ai besoin de mon chat
   sentences:
@@ -27,4 +27,4 @@ MonoBehaviour:
   actualAmount: 0
   amounToFind: 1
   goldToGive: 50
-  statut: 1
+  statut: 0
