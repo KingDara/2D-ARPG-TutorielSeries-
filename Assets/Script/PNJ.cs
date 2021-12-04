@@ -48,7 +48,7 @@ public class PNJ : MonoBehaviour
             questSr.color = Color.red;
 
         }
-        else if (quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount == quest.amounToFind)
+        else if (quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount >= quest.amounToFind)
         {
             questSr.sprite = iconQuest2;
             questSr.color = Color.yellow;
@@ -75,9 +75,19 @@ public class PNJ : MonoBehaviour
                 
                 
             }
-            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount == quest.amounToFind)
+            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount >= quest.amounToFind)
             {
                 StartDialogue(quest.completeSentence);
+                //recompense le joueur est enleve les objets déjà présent dans l'inventaire
+                PlayerController.money += quest.goldToGive;
+                foreach (var item in QuestManager.instance.allQuest) 
+                {
+                    if(item.statut == QuestSO.Statut.accepter && item.objectTofind == quest.objectTofind)
+                    {
+                        item.actualAmount -= quest.amounToFind;
+                    }
+                }
+                //Actualise le statut de quête
                 quest.statut = QuestSO.Statut.complete;
 
             }

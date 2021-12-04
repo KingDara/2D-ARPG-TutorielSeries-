@@ -13,6 +13,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] float moveSpeed;
     public int currentHealth;
     public int maxHealth;
+    public static int money;
 
     [Header("Attack")]
     private float attackTime;

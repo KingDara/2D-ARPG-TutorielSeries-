@@ -23,8 +23,8 @@ MonoBehaviour:
   - 3
   afterQuestSentence:
   - 4
-  objectTofind: 
-  actualAmount: 0
+  objectTofind: Heart
+  actualAmount: 2
   amounToFind: 1
   goldToGive: 50
-  statut: 0
+  statut: 1

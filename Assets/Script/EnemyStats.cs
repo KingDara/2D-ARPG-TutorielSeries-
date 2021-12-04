@@ -38,6 +38,9 @@ public class EnemyStats : MonoBehaviour
     protected Seeker seeker;
     protected float dist;
 
+    [Header("Loot]")]
+    public GameObject[] loot;
+
     public delegate void myAttack();
     public myAttack myMethode;
 
@@ -190,13 +193,47 @@ public class EnemyStats : MonoBehaviour
         healthBar.SetActive(true);
         if(currentHealth <= 0)
         {
+            foreach (var item in QuestManager.instance.allQuest)
+            {
+                if(item.statut == QuestSO.Statut.accepter)
+                {
+                    if(gameObject.name == item.objectTofind)
+                    {
+                        item.actualAmount++;
+
+                    }
+                }
+            }
+
+            if(loot.Length > 0)
+            {
+                int x = Random.Range(0, 3);
+
+                if(x == 0)
+                {
+                    int i = Random.Range(0, loot.Length);
+                    GameObject obj1 = Instantiate(loot[Random.Range(0, loot.Length)], 
+                        transform.position + new Vector3(Random.Range(0, 1), Random.Range(0,1),0), Quaternion.identity);
+                    obj1.name = loot[i].name;
+                }
+                else if(x == 1)
+                {
+                    int i = Random.Range(0, loot.Length);
+                    int y = Random.Range(0, loot.Length);
+                    GameObject obj1 = Instantiate(loot[i], transform.position + new Vector3(Random.Range(0, 2), Random.Range(0, 2), 0), Quaternion.identity);
+                    obj1.name = loot[i].name;
+
+                    GameObject obj2 =Instantiate(loot[y], transform.position + new Vector3(Random.Range(0, 2), Random.Range(0, 2), 0), Quaternion.identity);
+                    obj2.name = loot[y].name;
+
+                }
+            }
             Destroy(gameObject);
         }
     }
 
     void Flip()
     {
-
         if (rb.velocity.x > 0 && lookRight || rb.velocity.x < 0 && !lookRight)
         {
             lookRight = !lookRight;

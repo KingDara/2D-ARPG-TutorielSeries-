@@ -13,8 +13,9 @@ MonoBehaviour:
   m_Name: Quest 1
   m_EditorClassIdentifier: 
   id: 0
-  title: Retrouve mon chat 1
-  description: 1
+  title: "Satan\xE9 hibou !"
+  description: "Il faudrait que tu trouves un moyens de me d\xE9barasser de ses maudits
+    hibou ! Tue moi en 1 et rapporte moi sa t\xEAte !"
   sentences:
   - 1
   InProgressSentence:
@@ -23,8 +24,8 @@ MonoBehaviour:
   - 3
   afterQuestSentence:
   - 4
-  objectTofind: 
-  actualAmount: 1
+  objectTofind: Heart
+  actualAmount: 0
   amounToFind: 1
   goldToGive: 50
   statut: 2
