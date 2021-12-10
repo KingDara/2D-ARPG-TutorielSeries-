@@ -28,7 +28,14 @@ public class PNJ : MonoBehaviour
         choice2 = manager.choice2;
         if (quest != null && quest.statut == QuestSO.Statut.none)
         {
-            questSr.sprite = iconQuest1;
+            if (!quest.isEnabled)
+            {
+                questSr.sprite = null;
+            }
+            else
+            {
+                questSr.sprite = iconQuest1;
+            }
 
         }
         else if (quest == null)
@@ -39,10 +46,11 @@ public class PNJ : MonoBehaviour
 
     private void Update()
     {
-
-
-
-        if (quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind)
+        if (quest != null && quest.statut == QuestSO.Statut.none && quest.isEnabled)
+        {
+            questSr.sprite = iconQuest1;
+        }
+        else if (quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind)
         {
             questSr.sprite = iconQuest2;
             questSr.color = Color.red;
@@ -64,18 +72,18 @@ public class PNJ : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.E) && canDial)
         {
-            if(quest != null && quest.statut == QuestSO.Statut.none)
+            if(quest != null && quest.statut == QuestSO.Statut.none && quest.isEnabled)
             {
                 StartDialogue(quest.sentences);
                 
             }
-            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind)
+            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount < quest.amounToFind && quest.isEnabled)
             {
                 StartDialogue(quest.InProgressSentence);
                 
                 
             }
-            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount >= quest.amounToFind)
+            else if(quest != null && quest.statut == QuestSO.Statut.accepter && quest.actualAmount >= quest.amounToFind && quest.isEnabled)
             {
                 StartDialogue(quest.completeSentence);
                 //recompense le joueur est enleve les objets déjà présent dans l'inventaire
@@ -90,12 +98,34 @@ public class PNJ : MonoBehaviour
                 //Actualise le statut de quête
                 quest.statut = QuestSO.Statut.complete;
 
+                if(quest != null && quest.statut == QuestSO.Statut.complete && quest.isEnabled)
+                {
+                    foreach (var item in QuestManager.instance.allQuest)
+                    {
+                        if(item.id == quest.seriesID)
+                        {
+                            if (quest.hasSeries && quest.thisPnj)
+                            {
+                                quest = item;
+                                quest.isEnabled = true;
+                            }
+                            else if(quest.hasSeries && !quest.thisPnj)
+                            {
+                                item.isEnabled = true;
+                            }
+                            
+                        }
+                    }
+                }
+                             
+
             }
-            else if(quest != null && quest.statut == QuestSO.Statut.complete)
+            else if(quest != null && quest.statut == QuestSO.Statut.complete && quest.isEnabled)
             {
-                StartDialogue(quest.afterQuestSentence);
+               
+                    StartDialogue(quest.afterQuestSentence);
             }
-            else if(quest == null)
+            else if(quest == null || !quest.isEnabled)
             {
                 StartDialogue(sentences);
             }
@@ -131,11 +161,13 @@ public class PNJ : MonoBehaviour
 
         if (isOndial && index == sentence.Length - 1)
         {
-            if (quest != null && quest.statut == QuestSO.Statut.none)
+            if (quest != null && quest.statut == QuestSO.Statut.none && quest.isEnabled)
             {
                 choice1.SetActive(true);
                 choice2.SetActive(true);
 
+                choice1.GetComponent<Button>().onClick.RemoveAllListeners();
+                choice2.GetComponent<Button>().onClick.RemoveAllListeners();
                 choice1.GetComponent<Button>().onClick.AddListener(delegate { Accepte(); });
                 choice2.GetComponent<Button>().onClick.AddListener(delegate { Decline(); });
 
@@ -167,7 +199,7 @@ public class PNJ : MonoBehaviour
             {
                 choice1.SetActive(true);
                 choice2.SetActive(true);
-
+                
                 choice1.GetComponent<Button>().onClick.AddListener(delegate { Accepte(); });
                 choice2.GetComponent<Button>().onClick.AddListener(delegate { Decline(); });
             }

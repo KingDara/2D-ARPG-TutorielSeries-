@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c442ea0b466139b448cddc8358cc447a, type: 3}
   m_Name: Quest 1
   m_EditorClassIdentifier: 
+  isEnabled: 1
+  hasSeries: 0
+  thisPnj: 0
   id: 0
+  seriesID: 0
   title: "Satan\xE9 hibou !"
   description: "Il faudrait que tu trouves un moyens de me d\xE9barasser de ses maudits
     hibou ! Tue moi en 1 et rapporte moi sa t\xEAte !"

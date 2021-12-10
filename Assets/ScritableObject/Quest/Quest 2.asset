@@ -12,7 +12,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c442ea0b466139b448cddc8358cc447a, type: 3}
   m_Name: Quest 2
   m_EditorClassIdentifier: 
+  isEnabled: 0
+  hasSeries: 0
+  thisPnj: 0
   id: 1
+  seriesID: 0
   title: Retrouve mon chat 2
   description: 5
   sentences:
@@ -23,7 +27,7 @@ MonoBehaviour:
   - 3
   afterQuestSentence:
   - 4
-  objectTofind: 
+  objectTofind: Heart
   actualAmount: 0
   amounToFind: 1
   goldToGive: 50
