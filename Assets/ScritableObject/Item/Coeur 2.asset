@@ -15,8 +15,8 @@ MonoBehaviour:
   title: Test 1
   description: Coeur
   icon: {fileID: 21300000, guid: 5f9e617faa00b8849a1941cadd3edb28, type: 3}
-  amount: 3
+  amount: 24
   goldToGive: 0
   amountToHeal: 0
-  isStackable: 0
+  isStackable: 1
   type: 0
