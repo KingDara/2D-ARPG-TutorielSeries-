@@ -9,7 +9,20 @@ public class CameraController : MonoBehaviour
 
     public float ymin, ymax, xmin, xmax;
 
+    public static CameraController instance;
 
+    private void Awake()
+    {
+        if (instance != null && instance != this)
+        {
+            Destroy(this.gameObject);
+        }
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(this);
+        }
+    }
     // Start is called before the first frame update
     void Start()
     {
