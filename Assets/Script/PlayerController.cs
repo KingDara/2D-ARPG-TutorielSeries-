@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
     [Header("Component")]
     Rigidbody2D rb;
     Animator anim;
+    AudioSource src;
 
 
     [Header("Stat")]
@@ -23,6 +24,9 @@ public class PlayerController : MonoBehaviour
     public LayerMask whatIsEnemy;
     public float range;
     public int damage = 1;
+
+    [Header("SFX")]
+    public AudioClip swordSound;
     
 
     public static PlayerController instance;
@@ -48,6 +52,7 @@ public class PlayerController : MonoBehaviour
         currentHealth = maxHealth;
         rb = GetComponent<Rigidbody2D>();
         anim = GetComponent<Animator>();
+        src = GetComponent<AudioSource>();
     }
 
     // Update is called once per frame
@@ -66,6 +71,7 @@ public class PlayerController : MonoBehaviour
         {
             if (Time.time >= attackTime)
             {
+                PlaySwordSound();
                 rb.velocity = Vector2.zero;
                 anim.SetTrigger("attack");
 
@@ -168,4 +174,9 @@ public class PlayerController : MonoBehaviour
         currentHealth -= damage;
     }
 
+    public void PlaySwordSound()
+    {
+        src.clip = swordSound;
+        src.Play();
+    }
 }
